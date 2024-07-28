@@ -1,0 +1,58 @@
+﻿@page "/"
+@rendermode InteractiveServer
+<PageTitle>Home</PageTitle>
+
+<h3 class="text-center my-4">Encrypt and Decrypt</h3>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="plaintext">Plaintext:</label>
+                <input type="text" id="plaintext" class="form-control" @bind="plainText" />
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-primary" @onclick="EncryptText">Encrypt</button>
+                <button class="btn btn-secondary" @onclick="DecryptText">Decrypt</button>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(encryptedText) || !string.IsNullOrEmpty(decryptedText))
+    {
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <p><strong>Encrypted Text:</strong> @encryptedText</p>
+                        <p><strong>Decrypted Text:</strong> @decryptedText</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private string? plainText;
+    private string? encryptedText;
+    private string? decryptedText;
+
+    private void EncryptText()
+    {
+        if (!string.IsNullOrEmpty(plainText))
+        {
+            encryptedText = EncryptionHelper.EncryptString(plainText);
+        }
+    }
+
+    private void DecryptText()
+    {
+        if (!string.IsNullOrEmpty(encryptedText))
+        {
+            decryptedText = EncryptionHelper.DecryptString(encryptedText);
+        }
+    }
+}
+
